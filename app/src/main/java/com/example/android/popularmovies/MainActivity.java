@@ -1,30 +1,23 @@
 package com.example.android.popularmovies;
 
-import android.content.Context;
 import android.content.Intent;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.AsyncTask;
-import android.support.v4.view.MenuItemCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.GridView;
-import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.example.android.popularmovies.adapters.MoviesAdapter;
 import com.example.android.popularmovies.utilities.Network;
-import com.example.android.popularmovies.utilities.TheMovieDBApi;
+import com.example.android.popularmovies.utilities.TMDBApi;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -98,7 +91,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void populateMoviesList() {
-        TheMovieDBApi api = new TheMovieDBApi();
+        TMDBApi api = new TMDBApi();
         URL urlList;
 
         if (sortmovies == 0)

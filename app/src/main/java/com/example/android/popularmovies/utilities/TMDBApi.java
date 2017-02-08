@@ -18,7 +18,7 @@ import java.net.URL;
  * Created by jlainezs on 06/02/2017 for PopularMovies
  */
 
-public class TheMovieDBApi {
+public class TMDBApi {
     private final static String THEMOVIEDB_API_BASE_URL = "https://api.themoviedb.org/3";
     private final static String THEMOVIEDB_IMAGES_BASE_URL = "http://image.tmdb.org/t/p";
     // "w92", "w154", "w185", "w342", "w500", "w780"

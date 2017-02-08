@@ -10,17 +10,15 @@
 package com.example.android.popularmovies.adapters;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.example.android.popularmovies.Movie;
 import com.example.android.popularmovies.R;
-import com.example.android.popularmovies.utilities.TheMovieDBApi;
+import com.example.android.popularmovies.utilities.TMDBApi;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -39,7 +37,7 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent){
         Movie movie = getItem(position);
-        TheMovieDBApi api = new TheMovieDBApi();
+        TMDBApi api = new TMDBApi();
 
         if (convertView == null){
             convertView = LayoutInflater.from(getContext()).inflate(R.layout.grid_item, parent, false);

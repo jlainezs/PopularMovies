@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
-import com.example.android.popularmovies.utilities.TheMovieDBApi;
+import com.example.android.popularmovies.utilities.TMDBApi;
 import com.squareup.picasso.Picasso;
 
 public class MovieDetailsActivity extends AppCompatActivity {
@@ -26,7 +26,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
         movie = (Movie) getIntent().getSerializableExtra("movie");
-        TheMovieDBApi api = new TheMovieDBApi();
+        TMDBApi api = new TMDBApi();
 
         ImageView moviePoster = (ImageView) findViewById(R.id.movie_poster);
         String imageUrl = api.getMovieImageUrl(movie.getPoster_path()).toString();
