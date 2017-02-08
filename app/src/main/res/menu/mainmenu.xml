@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/menuSortMostPopular"
+        android:title="@string/menuoption_most_popular_option"
+        android:actionLayout="@layout/action_sort"
+        />
+    <item
+        android:id="@+id/menuSortTopRated"
+        android:title="@string/menuoption_top_rated_option"
+        android:actionLayout="@layout/action_sort"  />
+</menu>
