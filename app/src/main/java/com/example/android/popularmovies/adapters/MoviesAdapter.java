@@ -23,9 +23,6 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-/**
- * Created by jlainezs on 06/02/2017 for PopularMovies
- */
 
 public class MoviesAdapter extends ArrayAdapter<Movie> {
     private static final String LOG_TAG = MoviesAdapter.class.getName();
