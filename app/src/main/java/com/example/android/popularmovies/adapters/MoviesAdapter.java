@@ -44,6 +44,8 @@ public class MoviesAdapter extends ArrayAdapter<Movie> {
         String imageUrl = api.getMovieImageUrl(movie.getPoster_path()).toString();
         Picasso.with(this.getContext())
                 .load(imageUrl)
+                .placeholder(R.drawable.dummy)
+                .error(R.drawable.error_icon_4)
                 .into(poster);
 
         return convertView;

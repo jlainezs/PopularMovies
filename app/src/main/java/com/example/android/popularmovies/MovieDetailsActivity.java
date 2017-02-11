@@ -23,6 +23,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
         String imageUrl = api.getMovieImageUrl(movie.getPoster_path()).toString();
         Picasso.with(this)
                 .load(imageUrl)
+                .placeholder(R.drawable.dummy)
+                .error(R.drawable.dummy)
                 .into(moviePoster);
         TextView movieTitle = (TextView) findViewById(R.id.movie_title);
         movieTitle.setText(movie.getOriginal_title());
