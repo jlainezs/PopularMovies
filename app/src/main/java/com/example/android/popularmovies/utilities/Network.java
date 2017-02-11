@@ -40,4 +40,20 @@ public class Network {
 
         return resultStrBuilder.toString();
     }
+
+    /**
+     * Check for NETWORK connection
+     *
+     * @param context
+     * @return bool
+     *
+     * @link http://stackoverflow.com/questions/1560788/how-to-check-internet-access-on-android-inetaddress-never-times-out?page=1&tab=votes#tab-top
+     */
+    public static boolean isOnline(Context context) {
+        ConnectivityManager cm =
+                (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
 }

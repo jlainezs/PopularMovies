@@ -50,12 +50,16 @@ public class MoviesFetcher extends AsyncTask<URL, Void, ArrayList<Movie>> {
         URL searchUrl = urls[0];
         ArrayList<Movie> movies = new ArrayList<>();
         try {
-            String jsonMoviesStr = Network.getResponseFromHttpUrl(searchUrl);
-            JSONObject jsonMovies = new JSONObject(jsonMoviesStr);
-            JSONArray results = jsonMovies.getJSONArray("results");
-            for (int i = 0; i < results.length(); i++) {
-                JSONObject result = results.getJSONObject(i);
-                movies.add(new Movie(result));
+            if (Network.isOnline(context)) {
+                String jsonMoviesStr = Network.getResponseFromHttpUrl(searchUrl);
+                JSONObject jsonMovies = new JSONObject(jsonMoviesStr);
+                JSONArray results = jsonMovies.getJSONArray("results");
+                for (int i = 0; i < results.length(); i++) {
+                    JSONObject result = results.getJSONObject(i);
+                    movies.add(new Movie(result));
+                }
+            } else {
+                throw new Exception("No internet connection detected.");
             }
         }
         catch (Exception e){
