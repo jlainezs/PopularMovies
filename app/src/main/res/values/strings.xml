@@ -4,6 +4,7 @@
     <string name="menuoption_most_popular_option">Most popular</string>
     <string name="menuoption_top_rated_option">Top rated</string>
     <string name="error_message_cant_load_movies">Can\'t load movies list right now.</string>
+    <string name="no_network_available">No internet connection detected.</string>
     <string-array name="movies_sort">
         <item>Most popular</item>
         <item>Most rated</item>

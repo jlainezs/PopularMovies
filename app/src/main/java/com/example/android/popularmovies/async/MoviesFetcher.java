@@ -27,6 +27,7 @@ import com.example.android.popularmovies.utilities.Network;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.net.ConnectException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -59,7 +60,7 @@ public class MoviesFetcher extends AsyncTask<URL, Void, ArrayList<Movie>> {
                     movies.add(new Movie(result));
                 }
             } else {
-                throw new Exception("No internet connection detected.");
+                throw new ConnectException(context.getString(R.string.no_network_available));
             }
         }
         catch (Exception e){

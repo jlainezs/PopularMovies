@@ -20,6 +20,7 @@ import com.example.android.popularmovies.utilities.TMDBApi;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.net.ConnectException;
 import java.net.URL;
 import java.util.ArrayList;
 
@@ -37,7 +38,9 @@ public class MainActivity extends AppCompatActivity {
             GridView gridView = (GridView) findViewById(R.id.gridview);
             ((MoviesAdapter) gridView.getAdapter()).addAll(movies);
 
-            if (exception != null) {
+            if (exception.getClass() == ConnectException.class){
+                Toast.makeText(MainActivity.this, R.string.no_network_available, Toast.LENGTH_LONG).show();
+            } else if (exception != null) {
                 Toast.makeText(MainActivity.this, R.string.error_message_cant_load_movies, Toast.LENGTH_LONG).show();
             }
         }
