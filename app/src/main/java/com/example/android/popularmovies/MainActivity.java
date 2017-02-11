@@ -12,6 +12,8 @@ import android.widget.GridView;
 import android.widget.Toast;
 
 import com.example.android.popularmovies.adapters.MoviesAdapter;
+import com.example.android.popularmovies.async.AsyncTaskCompleteListener;
+import com.example.android.popularmovies.async.MoviesFetcher;
 import com.example.android.popularmovies.utilities.Network;
 import com.example.android.popularmovies.utilities.TMDBApi;
 
@@ -25,47 +27,21 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Movie> movies = new ArrayList<>();
     private int sortmovies = 0;
 
-    /**
-     * Fetches movies
-     */
-    public class MoviesFetcher extends AsyncTask<URL, Void, ArrayList<Movie>> {
-        Exception exception = null;
+    public class FetchMoviesTaskCompleteLister  implements AsyncTaskCompleteListener<ArrayList<Movie>> {
         @Override
-        protected ArrayList<Movie> doInBackground(URL... urls) {
-            URL searchUrl = urls[0];
-            ArrayList<Movie> movies = new ArrayList<>();
-            try {
-                String jsonMoviesStr = Network.getResponseFromHttpUrl(searchUrl);
-                JSONObject jsonMovies = new JSONObject(jsonMoviesStr);
-                JSONArray results = jsonMovies.getJSONArray("results");
-                for (int i = 0; i < results.length(); i++) {
-                    JSONObject result = results.getJSONObject(i);
-                    movies.add(new Movie(result));
-                }
-            }
-            catch (Exception e){
-                exception = e;
-            }
-
-            return movies;
-        }
-
-        @Override
-        protected void onPostExecute(ArrayList<Movie> moviesResult) {
-            if (movies.size() >0 ){
+        public void onTaskComplete(ArrayList<Movie> result, Exception exception) {
+            if (movies.size() > 0) {
                 movies.clear();
             }
-            movies = moviesResult;
+            movies = result;
             GridView gridView = (GridView) findViewById(R.id.gridview);
             ((MoviesAdapter) gridView.getAdapter()).addAll(movies);
 
-            if (exception != null)
-            {
+            if (exception != null) {
                 Toast.makeText(MainActivity.this, R.string.error_message_cant_load_movies, Toast.LENGTH_LONG).show();
             }
         }
     }
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -103,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
             urlList = api.getTopRatedMoviesUrl();
         }
 
-        new MoviesFetcher().execute(urlList);
+        new MoviesFetcher(this, new FetchMoviesTaskCompleteLister()).execute(urlList);
     }
 
     private void reloadList()

@@ -7,25 +7,25 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context="com.example.android.popularmovies.MovieDetailsActivity"
-    android:padding="16dp">
+    android:padding="@dimen/activity_padding">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/movie_poster"
-        android:layout_marginBottom="5sp"
+        android:layout_marginBottom="@dimen/small_margin"
         />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="10sp">
+        android:layout_marginBottom="@dimen/small_margin">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/movie_title"
-            android:textSize="18sp"
-            android:layout_marginBottom="5sp"
+            android:textSize="@dimen/movie_title_font_size"
+            android:layout_marginBottom="@dimen/small_margin"
             android:gravity="start"
             android:layout_weight="3"
             />
@@ -36,7 +36,7 @@
             android:numStars="5"
             android:stepSize="0.1"
             android:isIndicator="true"
-            android:paddingTop="5dp"
+            android:paddingTop="@dimen/small_margin"
             style="?android:attr/ratingBarStyleSmall"
             android:id="@+id/movie_rating"/>
     </LinearLayout>
@@ -44,12 +44,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/movie_releasedate"
-        android:layout_marginBottom="5sp"
+        android:layout_marginBottom="@dimen/small_margin"
         />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/movie_overview"
-        android:layout_marginBottom="5sp"
+        android:layout_marginBottom="@dimen/small_margin"
         />
+    </ScrollView>
 </LinearLayout>
