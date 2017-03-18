@@ -3,6 +3,7 @@ package com.example.android.popularmovies;
 import org.json.JSONException;
 import org.json.JSONObject;
 import java.io.Serializable;
+import java.util.ArrayList;
 
 
 public class Movie implements Serializable {
@@ -13,6 +14,7 @@ public class Movie implements Serializable {
     private String original_title;
     private String title;
     private Double vote_average;
+    private ArrayList<String> videos;
 
     public String getPoster_path() {
         return poster_path;
@@ -79,6 +81,7 @@ public class Movie implements Serializable {
             setOriginal_title(jsonMovie.getString("original_title"));
             setTitle(jsonMovie.getString("title"));
             setVote_average(jsonMovie.getDouble("vote_average"));
+            setId(jsonMovie.getLong("id"));
         } catch (JSONException e){
             e.printStackTrace();
         }

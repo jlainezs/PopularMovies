@@ -8,4 +8,6 @@
     <dimen name="small_margin">5sp</dimen>
     <dimen name="large_margin">10sp</dimen>
     <dimen name="grid_spacing">0dp</dimen>
+    <dimen name="default_padding">10sp</dimen>
+    <dimen name="large_padding">25sp</dimen>
 </resources>

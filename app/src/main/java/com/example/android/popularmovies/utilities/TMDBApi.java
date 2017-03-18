@@ -14,7 +14,7 @@ public class TMDBApi {
     private final static String THEMOVIEDB_IMAGES_BASE_URL = "http://image.tmdb.org/t/p";
     // "w92", "w154", "w185", "w342", "w500", "w780"
     private final static String THEMOVIEDB_IMAGES_SIZE = "w500";
-    private final static String THEMOVIEDB_API_KEY = "___YUOR_API_KEY_HERE___";
+    private final static String THEMOVIEDB_API_KEY = "";
 
     /**
      * Gets the popular movies JSON url
@@ -49,6 +49,25 @@ public class TMDBApi {
         URL url = null;
 
         try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        return url;
+    }
+
+    public URL getMovieVideos(String movieId)
+    {
+        Uri builtUri = Uri.parse(THEMOVIEDB_API_BASE_URL).buildUpon()
+                .appendPath("movie")
+                .appendPath(movieId)
+                .appendPath("videos")
+                .appendQueryParameter("api_key", THEMOVIEDB_API_KEY)
+                .build();
+        URL  url = null;
+
+        try{
             url = new URL(builtUri.toString());
         } catch (MalformedURLException e) {
             e.printStackTrace();
