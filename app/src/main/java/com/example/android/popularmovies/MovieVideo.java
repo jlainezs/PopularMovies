@@ -9,8 +9,13 @@
 
 package com.example.android.popularmovies;
 
+import android.net.Uri;
+
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * Created by jlainezs on 18/03/2017 for PopularMovies
@@ -104,5 +109,20 @@ public class MovieVideo {
         } catch (JSONException e){
             e.printStackTrace();
         }
+    }
+
+    public URL getVideoPath() throws MalformedURLException {
+        URL videoPath = null;
+
+        if (getSite().toLowerCase().equals("youtube")) {
+            Uri videoUri = Uri.parse("http://www.youtube.com")
+                    .buildUpon()
+                    .appendPath("watch")
+                    .appendQueryParameter("v", getKey())
+                    .build();
+            videoPath = new URL(videoUri.toString());
+        }
+
+        return videoPath;
     }
 }

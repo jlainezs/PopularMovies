@@ -1,12 +1,18 @@
 package com.example.android.popularmovies;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.android.popularmovies.adapters.MovieVideosAdapter;
 import com.example.android.popularmovies.async.AsyncTaskCompleteListener;
 import com.example.android.popularmovies.async.MoviesFetcher;
 import com.example.android.popularmovies.async.MoviesVideosFetcher;
@@ -31,6 +37,9 @@ public class MovieDetailsActivity extends AppCompatActivity {
             }
 
             movieVideos = result;
+            ListView listView = (ListView) findViewById(R.id.movie_videos_list);
+            MovieVideosAdapter adapter = (MovieVideosAdapter) listView.getAdapter();
+            adapter.addAll(movieVideos);
 
             if (exception != null) {
                 if (exception.getClass() == ConnectException.class){
@@ -66,11 +75,31 @@ public class MovieDetailsActivity extends AppCompatActivity {
         rating.setRating(movie.getVote_average().floatValue());
 
         populateMovieVideosList();
+        ListView videosList = (ListView) findViewById(R.id.movie_videos_list);
+        videosList.setAdapter(new MovieVideosAdapter(this, movieVideos));
+        videosList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                MovieVideo video = movieVideos.get(position);
+
+                try {
+                    String newVideoPath = video.getVideoPath().toString();
+                    if (newVideoPath != null) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(newVideoPath));
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(MovieDetailsActivity.this, "Can't show video: unsupported platform", Toast.LENGTH_LONG).show();
+                    }
+                } catch (Exception e) {
+                    Toast.makeText(MovieDetailsActivity.this, "Can't show this video now!", Toast.LENGTH_LONG).show();
+                }
+            }
+        });
     }
 
     private void populateMovieVideosList() {
         TMDBApi api = new TMDBApi();
-        URL urlList = api.getMovieVideos(movie.getId().toString());
-        new MoviesVideosFetcher(this, new FetchMoviesVideosTaskCompleteLister()).execute(urlList);
+        URL videosUrl = api.getMovieVideos(movie.getId().toString());
+        new MoviesVideosFetcher(this, new FetchMoviesVideosTaskCompleteLister()).execute(videosUrl);
     }
 }
