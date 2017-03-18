@@ -14,7 +14,7 @@ public class TMDBApi {
     private final static String THEMOVIEDB_IMAGES_BASE_URL = "http://image.tmdb.org/t/p";
     // "w92", "w154", "w185", "w342", "w500", "w780"
     private final static String THEMOVIEDB_IMAGES_SIZE = "w500";
-    private final static String THEMOVIEDB_API_KEY = "";
+    private final static String THEMOVIEDB_API_KEY = "___YUOR_API_KEY_HERE___";
 
     /**
      * Gets the popular movies JSON url
