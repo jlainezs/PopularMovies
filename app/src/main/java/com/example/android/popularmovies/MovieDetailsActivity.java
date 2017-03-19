@@ -23,6 +23,7 @@ import com.example.android.popularmovies.dataclasses.Movie;
 import com.example.android.popularmovies.dataclasses.MovieReview;
 import com.example.android.popularmovies.dataclasses.MovieVideo;
 import com.example.android.popularmovies.utilities.TMDBApi;
+import com.example.android.popularmovies.views.ExpandableHeightListView;
 import com.squareup.picasso.Picasso;
 
 import java.net.ConnectException;
@@ -49,7 +50,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
             ListView listView = (ListView) findViewById(R.id.movie_videos_list);
             MovieVideosAdapter adapter = (MovieVideosAdapter) listView.getAdapter();
             adapter.addAll(movieVideos);
-            setListViewHeightBasedOnChildren(listView);
+            // setListViewHeightBasedOnChildren(listView);
 
             if (exception != null) {
                 if (exception.getClass() == ConnectException.class){
@@ -78,13 +79,13 @@ public class MovieDetailsActivity extends AppCompatActivity {
 
             if (movieReviews.size() == 0)
             {
-                txtReviewsTitle.setVisibility(View.INVISIBLE);
+                txtReviewsTitle.setVisibility(View.GONE);
             } else {
                 String ttl = txtReviewsTitle.getText() + " (" + String.valueOf(movieReviews.size()) + ")";
                 txtReviewsTitle.setText(ttl);
             }
 
-            setListViewHeightBasedOnChildren(listView);
+            //setListViewHeightBasedOnChildren(listView);
 
             if (exception != null) {
                 if (exception.getClass() == ConnectException.class){
@@ -119,7 +120,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
         rating.setRating(movie.getVote_average().floatValue());
 
         populateMovieVideosList();
-        ListView videosList = (ListView) findViewById(R.id.movie_videos_list);
+        ExpandableHeightListView videosList = (ExpandableHeightListView) findViewById(R.id.movie_videos_list);
+        videosList.setExpanded(true);
         videosList.setAdapter(new MovieVideosAdapter(this, movieVideos));
         videosList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -141,9 +143,9 @@ public class MovieDetailsActivity extends AppCompatActivity {
         });
 
         populateMovieReviewsList();
-        ListView reviewsList = (ListView) findViewById(R.id.movie_reviews_list);
+        ExpandableHeightListView reviewsList = (ExpandableHeightListView) findViewById(R.id.movie_reviews_list);
+        reviewsList.setExpanded(true);
         reviewsList.setAdapter(new MovieReviewsAdapter(this, movieReviews));
-
     }
 
     private void populateMovieReviewsList(){
