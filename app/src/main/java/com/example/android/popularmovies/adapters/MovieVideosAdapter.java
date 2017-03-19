@@ -23,16 +23,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.android.popularmovies.Movie;
-import com.example.android.popularmovies.MovieVideo;
+import com.example.android.popularmovies.dataclasses.MovieVideo;
 import com.example.android.popularmovies.R;
 import com.example.android.popularmovies.utilities.TMDBApi;
-import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 

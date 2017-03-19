@@ -19,6 +19,9 @@ import com.example.android.popularmovies.adapters.MovieVideosAdapter;
 import com.example.android.popularmovies.async.AsyncTaskCompleteListener;
 import com.example.android.popularmovies.async.MoviesReviewsFetcher;
 import com.example.android.popularmovies.async.MoviesVideosFetcher;
+import com.example.android.popularmovies.dataclasses.Movie;
+import com.example.android.popularmovies.dataclasses.MovieReview;
+import com.example.android.popularmovies.dataclasses.MovieVideo;
 import com.example.android.popularmovies.utilities.TMDBApi;
 import com.squareup.picasso.Picasso;
 
@@ -71,6 +74,16 @@ public class MovieDetailsActivity extends AppCompatActivity {
             ListView listView = (ListView) findViewById(R.id.movie_reviews_list);
             MovieReviewsAdapter adapter = (MovieReviewsAdapter) listView.getAdapter();
             adapter.addAll(movieReviews);
+            TextView txtReviewsTitle = (TextView) findViewById(R.id.movie_reviews_title);
+
+            if (movieReviews.size() == 0)
+            {
+                txtReviewsTitle.setVisibility(View.INVISIBLE);
+            } else {
+                String ttl = txtReviewsTitle.getText() + " (" + String.valueOf(movieReviews.size()) + ")";
+                txtReviewsTitle.setText(ttl);
+            }
+
             setListViewHeightBasedOnChildren(listView);
 
             if (exception != null) {
@@ -160,6 +173,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
             listItem.measure(0, 0);
             totalHeight += listItem.getMeasuredHeight();
         }
+        totalHeight += listView.getPaddingTop() + listView.getPaddingBottom();
 
         ViewGroup.LayoutParams params = listView.getLayoutParams();
         params.height = totalHeight + (listView.getDividerHeight() * (adapter.getCount() - 1));

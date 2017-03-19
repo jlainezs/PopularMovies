@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
-import com.example.android.popularmovies.Movie;
+import com.example.android.popularmovies.dataclasses.Movie;
 import com.example.android.popularmovies.R;
 import com.example.android.popularmovies.utilities.TMDBApi;
 import com.squareup.picasso.Picasso;

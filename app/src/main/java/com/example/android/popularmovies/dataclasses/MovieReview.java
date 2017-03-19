@@ -16,7 +16,16 @@
  * http://www.econceptes.com
  */
 
-package com.example.android.popularmovies;
+/*
+ * Copyright (c) 2017 EConceptes. All rights reserved.
+ * THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+ * IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE.
+ * http://www.econceptes.com
+ */
+
+package com.example.android.popularmovies.dataclasses;
 
 import android.net.Uri;
 
@@ -25,6 +34,8 @@ import org.json.JSONObject;
 
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Created by jlainezs on 18/03/2017 for PopularMovies
@@ -79,5 +90,25 @@ public class MovieReview {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * Uses the **somecontent** notation on some reviews to use it as a headline for the review.
+     *
+     * @return String
+     */
+    public String getContentHeadline()
+    {
+        String pattern = "\\*\\*(.*)\\*\\*";
+        Pattern r = Pattern.compile(pattern);
+        Matcher m = r.matcher(getContent());
+        String result = "";
+
+        if (m.find())
+        {
+            result = m.group(1);
+        }
+
+        return result;
     }
 }

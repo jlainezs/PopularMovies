@@ -34,7 +34,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.android.popularmovies.MovieReview;
+import com.example.android.popularmovies.dataclasses.MovieReview;
 import com.example.android.popularmovies.R;
 import com.example.android.popularmovies.utilities.TMDBApi;
 
@@ -43,6 +43,7 @@ import java.util.ArrayList;
 
 public class MovieReviewsAdapter extends ArrayAdapter<MovieReview> {
     private static final String LOG_TAG = MovieReviewsAdapter.class.getName();
+    public static final int CONTENT_REVIEW_LENGTH = 200;
 
     public MovieReviewsAdapter(Activity context, ArrayList<MovieReview> movieReviews) {
         super(context, 0, movieReviews);
@@ -61,10 +62,25 @@ public class MovieReviewsAdapter extends ArrayAdapter<MovieReview> {
         txtAuthor.setText(movieReview.getAuthor());
 
         TextView txtContent = (TextView) convertView.findViewById(R.id.movie_review_content);
-        txtContent.setText(movieReview.getContent());
+        String review = movieReview.getContent();
+        String reviewTitle = movieReview.getContentHeadline();
 
+        if (reviewTitle.length() > 0)
+        {
+            review = reviewTitle;
+        } else {
+
+            if (review.length() > CONTENT_REVIEW_LENGTH) {
+                review = review.substring(0, CONTENT_REVIEW_LENGTH) + "...";
+            }
+        }
+
+        txtContent.setText(review);
+
+        /*
         TextView txtUrl = (TextView) convertView.findViewById(R.id.movie_review_url);
         txtUrl.setText(movieReview.getUrl());
+        */
 
         return convertView;
     }

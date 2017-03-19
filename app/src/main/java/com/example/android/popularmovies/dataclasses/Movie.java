@@ -1,4 +1,13 @@
-package com.example.android.popularmovies;
+/*
+ * Copyright (c) 2017 EConceptes. All rights reserved.
+ * THIS SOFTWARE IS PROVIDED ``AS IS'' AND WITHOUT ANY EXPRESS OR
+ * IMPLIED WARRANTIES, INCLUDING, WITHOUT LIMITATION, THE IMPLIED
+ * WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR
+ * PURPOSE.
+ * http://www.econceptes.com
+ */
+
+package com.example.android.popularmovies.dataclasses;
 
 import org.json.JSONException;
 import org.json.JSONObject;

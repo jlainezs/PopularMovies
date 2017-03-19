@@ -15,13 +15,9 @@ package com.example.android.popularmovies.async;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.GridView;
-import android.widget.Toast;
 
-import com.example.android.popularmovies.MainActivity;
-import com.example.android.popularmovies.Movie;
+import com.example.android.popularmovies.dataclasses.Movie;
 import com.example.android.popularmovies.R;
-import com.example.android.popularmovies.adapters.MoviesAdapter;
 import com.example.android.popularmovies.utilities.Network;
 
 import org.json.JSONArray;

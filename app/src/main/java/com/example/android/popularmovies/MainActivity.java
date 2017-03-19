@@ -1,7 +1,6 @@
 package com.example.android.popularmovies;
 
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,11 +13,8 @@ import android.widget.Toast;
 import com.example.android.popularmovies.adapters.MoviesAdapter;
 import com.example.android.popularmovies.async.AsyncTaskCompleteListener;
 import com.example.android.popularmovies.async.MoviesFetcher;
-import com.example.android.popularmovies.utilities.Network;
+import com.example.android.popularmovies.dataclasses.Movie;
 import com.example.android.popularmovies.utilities.TMDBApi;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.net.ConnectException;
 import java.net.URL;

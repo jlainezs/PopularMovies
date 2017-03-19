@@ -6,6 +6,8 @@
     <string name="error_message_cant_load_movies">Can\'t load movies list right now.</string>
     <string name="no_network_available">The network is not available.</string>
     <string name="dummy_placeholder">XXXXXXXXXXXXXXXXXXXX</string>
+    <string name="trailers">Trailers</string>
+    <string name="movie_reviews_title">Reviews</string>
     <string-array name="movies_sort">
         <item>Most popular</item>
         <item>Most rated</item>
