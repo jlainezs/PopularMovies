@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ImageView;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.TextView;
@@ -16,6 +17,7 @@ import android.widget.Toast;
 import com.example.android.popularmovies.adapters.MovieReviewsAdapter;
 import com.example.android.popularmovies.adapters.MovieVideosAdapter;
 import com.example.android.popularmovies.async.AsyncTaskCompleteListener;
+import com.example.android.popularmovies.async.MoviesReviewsFetcher;
 import com.example.android.popularmovies.async.MoviesVideosFetcher;
 import com.example.android.popularmovies.utilities.TMDBApi;
 import com.squareup.picasso.Picasso;
@@ -27,7 +29,9 @@ import java.util.ArrayList;
 public class MovieDetailsActivity extends AppCompatActivity {
     private Movie movie;
     private ArrayList<MovieVideo> movieVideos = new ArrayList<>();
-    private ArrayList<MovieReview> movieComments = new ArrayList<>();
+    private ArrayList<MovieReview> movieReviews = new ArrayList<>();
+    private TMDBApi api = new TMDBApi();
+
 
     public class FetchMoviesVideosTaskCompleteLister  implements AsyncTaskCompleteListener<ArrayList<MovieVideo>> {
 
@@ -54,19 +58,19 @@ public class MovieDetailsActivity extends AppCompatActivity {
         }
     }
 
-    public class FetchMoviesCommentsTaskCompleteListener implements AsyncTaskCompleteListener<ArrayList<MovieReview>>{
+    public class FetchMoviesReviewsTaskCompleteListener implements AsyncTaskCompleteListener<ArrayList<MovieReview>>{
         @Override
         public void onTaskComplete(ArrayList<MovieReview> result, Exception exception)
         {
-            if (movieComments.size() > 0)
+            if (movieReviews.size() > 0)
             {
-                movieComments.clear();
+                movieReviews.clear();
             }
 
-            movieComments = result;
-            ListView listView = (ListView) findViewById(R.id.movie_videos_list);
+            movieReviews = result;
+            ListView listView = (ListView) findViewById(R.id.movie_reviews_list);
             MovieReviewsAdapter adapter = (MovieReviewsAdapter) listView.getAdapter();
-            adapter.addAll(movieComments);
+            adapter.addAll(movieReviews);
             setListViewHeightBasedOnChildren(listView);
 
             if (exception != null) {
@@ -84,7 +88,6 @@ public class MovieDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_movie_details);
         movie = (Movie) getIntent().getSerializableExtra("movie");
-        TMDBApi api = new TMDBApi();
 
         ImageView moviePoster = (ImageView) findViewById(R.id.movie_poster);
         String imageUrl = api.getMovieImageUrl(movie.getPoster_path()).toString();
@@ -123,10 +126,19 @@ public class MovieDetailsActivity extends AppCompatActivity {
                 }
             }
         });
+
+        populateMovieReviewsList();
+        ListView reviewsList = (ListView) findViewById(R.id.movie_reviews_list);
+        reviewsList.setAdapter(new MovieReviewsAdapter(this, movieReviews));
+
+    }
+
+    private void populateMovieReviewsList(){
+        URL reviewsUrl = api.getMovieReviews(movie.getId().toString());
+        new MoviesReviewsFetcher(this, new FetchMoviesReviewsTaskCompleteListener()).execute(reviewsUrl);
     }
 
     private void populateMovieVideosList() {
-        TMDBApi api = new TMDBApi();
         URL videosUrl = api.getMovieVideos(movie.getId().toString());
         new MoviesVideosFetcher(this, new FetchMoviesVideosTaskCompleteLister()).execute(videosUrl);
     }
@@ -137,7 +149,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
      * @link https://kennethflynn.wordpress.com/2012/09/12/putting-android-listviews-in-scrollviews/
      */
     public static void setListViewHeightBasedOnChildren(ListView listView) {
-        MovieVideosAdapter adapter = (MovieVideosAdapter) listView.getAdapter();
+        ListAdapter adapter = listView.getAdapter();
         if (adapter == null) {
             return;
         }

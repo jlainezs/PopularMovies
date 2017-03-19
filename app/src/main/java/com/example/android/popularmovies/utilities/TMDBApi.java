@@ -76,6 +76,25 @@ public class TMDBApi {
         return url;
     }
 
+    public URL getMovieReviews(String movieId)
+    {
+        Uri builtUri = Uri.parse(THEMOVIEDB_API_BASE_URL).buildUpon()
+                .appendPath("movie")
+                .appendPath(movieId)
+                .appendPath("reviews")
+                .appendQueryParameter("api_key", THEMOVIEDB_API_KEY)
+                .build();
+        URL  url = null;
+
+        try{
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        return url;
+    }
+
     /**
      * Gets an image URL
      *
