@@ -62,21 +62,8 @@ public class MovieReviewsAdapter extends ArrayAdapter<MovieReview> {
         txtAuthor.setText(movieReview.getAuthor());
 
         TextView txtContent = (TextView) convertView.findViewById(R.id.movie_review_content);
-        /*String review = movieReview.getContent();
-        String reviewTitle = movieReview.getContentHeadline();
-
-        if (reviewTitle.length() > 0)
-        {
-            review = reviewTitle;
-        } else {
-
-            if (review.length() > CONTENT_REVIEW_LENGTH) {
-                review = review.substring(0, CONTENT_REVIEW_LENGTH) + "...";
-            }
-        }*/
-
-
-        txtContent.setText(movieReview.getContent());
+        String review = movieReview.getContent();
+        txtContent.setText(review);
 
         /*
         TextView txtUrl = (TextView) convertView.findViewById(R.id.movie_review_url);

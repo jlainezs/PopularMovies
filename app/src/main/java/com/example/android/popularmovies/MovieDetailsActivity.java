@@ -35,7 +35,8 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private ArrayList<MovieVideo> movieVideos = new ArrayList<>();
     private ArrayList<MovieReview> movieReviews = new ArrayList<>();
     private TMDBApi api = new TMDBApi();
-
+    private static final String TAG = MovieDetailsActivity.class.getSimpleName();
+    private static final String ACTIVITY_MOVIE = "movie";
 
     public class FetchMoviesVideosTaskCompleteLister  implements AsyncTaskCompleteListener<ArrayList<MovieVideo>> {
 
@@ -146,6 +147,11 @@ public class MovieDetailsActivity extends AppCompatActivity {
         ExpandableHeightListView reviewsList = (ExpandableHeightListView) findViewById(R.id.movie_reviews_list);
         reviewsList.setExpanded(true);
         reviewsList.setAdapter(new MovieReviewsAdapter(this, movieReviews));
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 
     private void populateMovieReviewsList(){

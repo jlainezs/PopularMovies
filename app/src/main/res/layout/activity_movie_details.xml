@@ -43,7 +43,7 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
+                    android:layout_height="wrap_content"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -52,8 +52,8 @@
                         android:layout_height="186dp"
                         android:layout_gravity="start"
                         android:layout_marginBottom="@dimen/small_margin"
-                        android:src="@drawable/dummy"
-                        android:layout_weight="1.01" />
+                        android:layout_weight="1.01"
+                        android:src="@drawable/dummy" />
 
                     <LinearLayout
                         android:layout_width="wrap_content"
