@@ -25,7 +25,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import com.example.android.popularmovies.dataclasses.MovieVideo;
+import com.example.android.popularmovies.pojos.MovieVideo;
 import com.example.android.popularmovies.R;
 import com.example.android.popularmovies.utilities.TMDBApi;
 

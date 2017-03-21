@@ -7,7 +7,7 @@
  * http://www.econceptes.com
  */
 
-package com.example.android.popularmovies.dataclasses;
+package com.example.android.popularmovies.pojos;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -80,6 +80,8 @@ public class Movie implements Serializable {
     public void setVote_average(Double vote_average) {
         this.vote_average = vote_average;
     }
+
+    public Movie(){}
 
     public Movie(JSONObject jsonMovie)
     {

@@ -1,9 +1,13 @@
 package com.example.android.popularmovies;
 
+import android.content.ContentValues;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -19,9 +23,11 @@ import com.example.android.popularmovies.adapters.MovieVideosAdapter;
 import com.example.android.popularmovies.async.AsyncTaskCompleteListener;
 import com.example.android.popularmovies.async.MoviesReviewsFetcher;
 import com.example.android.popularmovies.async.MoviesVideosFetcher;
-import com.example.android.popularmovies.dataclasses.Movie;
-import com.example.android.popularmovies.dataclasses.MovieReview;
-import com.example.android.popularmovies.dataclasses.MovieVideo;
+import com.example.android.popularmovies.data.FavoriteMovieContract;
+import com.example.android.popularmovies.data.PopularMoviesDBHelper;
+import com.example.android.popularmovies.pojos.Movie;
+import com.example.android.popularmovies.pojos.MovieReview;
+import com.example.android.popularmovies.pojos.MovieVideo;
 import com.example.android.popularmovies.utilities.TMDBApi;
 import com.example.android.popularmovies.views.ExpandableHeightListView;
 import com.squareup.picasso.Picasso;
@@ -37,6 +43,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private TMDBApi api = new TMDBApi();
     private static final String TAG = MovieDetailsActivity.class.getSimpleName();
     private static final String ACTIVITY_MOVIE = "movie";
+    private SQLiteDatabase mDb;
 
     public class FetchMoviesVideosTaskCompleteLister  implements AsyncTaskCompleteListener<ArrayList<MovieVideo>> {
 
@@ -120,6 +127,7 @@ public class MovieDetailsActivity extends AppCompatActivity {
         RatingBar rating = (RatingBar) findViewById(R.id.movie_rating);
         rating.setRating(movie.getVote_average().floatValue());
 
+        // Prepare the videos list
         populateMovieVideosList();
         ExpandableHeightListView videosList = (ExpandableHeightListView) findViewById(R.id.movie_videos_list);
         videosList.setExpanded(true);
@@ -143,10 +151,35 @@ public class MovieDetailsActivity extends AppCompatActivity {
             }
         });
 
+        // Prepare the reviews list
         populateMovieReviewsList();
         ExpandableHeightListView reviewsList = (ExpandableHeightListView) findViewById(R.id.movie_reviews_list);
         reviewsList.setExpanded(true);
         reviewsList.setAdapter(new MovieReviewsAdapter(this, movieReviews));
+
+        PopularMoviesDBHelper dbHelper = new PopularMoviesDBHelper(this);
+        mDb = dbHelper.getWritableDatabase();
+
+        // Sets the button to add favorite items
+        ImageView favImage = (ImageView) this.findViewById(R.id.add_to_fav);
+        favImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    ContentValues cv = new ContentValues();
+                    cv.put(FavoriteMovieContract.FavoriteMovieEntry.COLUMN_NAME_MOVIEID, movie.getId());
+                    cv.put(FavoriteMovieContract.FavoriteMovieEntry.COLUMN_NAME_TITLE, movie.getTitle());
+                    cv.put(FavoriteMovieContract.FavoriteMovieEntry.COLUMN_NAME_OVERVIEW, movie.getOverview());
+                    cv.put(FavoriteMovieContract.FavoriteMovieEntry.COLUMN_NAME_POSTER, movie.getPoster_path());
+                    cv.put(FavoriteMovieContract.FavoriteMovieEntry.COLUMN_NAME_RATING, movie.getVote_average());
+                    cv.put(FavoriteMovieContract.FavoriteMovieEntry.COLUMN_NAME_RELEASED, movie.getRelease_date());
+                    mDb.insert(FavoriteMovieContract.FavoriteMovieEntry.TABLE_NAME, null, cv);
+                } catch (Exception e) {
+                    Toast.makeText(v.getContext(), "Can't save the favorite", Toast.LENGTH_SHORT).show();
+                    Log.e(TAG, e.getMessage());
+                }
+            }
+        });
     }
 
     @Override
@@ -162,30 +195,5 @@ public class MovieDetailsActivity extends AppCompatActivity {
     private void populateMovieVideosList() {
         URL videosUrl = api.getMovieVideos(movie.getId().toString());
         new MoviesVideosFetcher(this, new FetchMoviesVideosTaskCompleteLister()).execute(videosUrl);
-    }
-
-    /**
-     *
-     * @param listView
-     * @link https://kennethflynn.wordpress.com/2012/09/12/putting-android-listviews-in-scrollviews/
-     */
-    public static void setListViewHeightBasedOnChildren(ListView listView) {
-        ListAdapter adapter = listView.getAdapter();
-        if (adapter == null) {
-            return;
-        }
-
-        int totalHeight = 0;
-        for (int i = 0; i < adapter.getCount(); i++) {
-            View listItem = adapter.getView(i, null, listView);
-            listItem.measure(0, 0);
-            totalHeight += listItem.getMeasuredHeight();
-        }
-        totalHeight += listView.getPaddingTop() + listView.getPaddingBottom();
-
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (adapter.getCount() - 1));
-        listView.setLayoutParams(params);
-        listView.requestLayout();
     }
 }

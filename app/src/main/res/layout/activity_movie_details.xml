@@ -81,6 +81,12 @@
                             android:layout_marginBottom="@dimen/small_margin"
                             android:text="@string/dummy_placeholder" />
 
+                        <ImageButton
+                            android:id="@+id/add_to_fav"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@drawable/star_fav" />
+
                     </LinearLayout>
 
                 </LinearLayout>

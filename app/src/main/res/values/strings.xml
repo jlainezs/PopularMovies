@@ -8,6 +8,7 @@
     <string name="dummy_placeholder">XXXXXXXXXXXXXXXXXXXX</string>
     <string name="trailers">Trailers</string>
     <string name="movie_reviews_title">Reviews</string>
+    <string name="menuoption_favorites">Favorites</string>
     <string-array name="movies_sort">
         <item>Most popular</item>
         <item>Most rated</item>

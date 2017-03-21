@@ -25,7 +25,7 @@ package com.example.android.popularmovies.async;
 import android.content.Context;
 import android.os.AsyncTask;
 
-import com.example.android.popularmovies.dataclasses.MovieVideo;
+import com.example.android.popularmovies.pojos.MovieVideo;
 import com.example.android.popularmovies.R;
 import com.example.android.popularmovies.utilities.Network;
 

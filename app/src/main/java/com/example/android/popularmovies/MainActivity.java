@@ -13,7 +13,7 @@ import android.widget.Toast;
 import com.example.android.popularmovies.adapters.MoviesAdapter;
 import com.example.android.popularmovies.async.AsyncTaskCompleteListener;
 import com.example.android.popularmovies.async.MoviesFetcher;
-import com.example.android.popularmovies.dataclasses.Movie;
+import com.example.android.popularmovies.pojos.Movie;
 import com.example.android.popularmovies.utilities.TMDBApi;
 
 import java.net.ConnectException;
@@ -23,6 +23,10 @@ import java.util.ArrayList;
 public class MainActivity extends AppCompatActivity {
     private ArrayList<Movie> movies = new ArrayList<>();
     private int sortmovies = 0;
+    private boolean showFavs = false;
+    private final int SHOW_POPULAR_MOVIES = 0;
+    private final int SHOW_TOPRATED_MOVIES = 1;
+    private final int SHOW_FAVORITE_MOVIES = 2;
 
     public class FetchMoviesTaskCompleteLister  implements AsyncTaskCompleteListener<ArrayList<Movie>> {
         @Override
@@ -48,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         initializeGrid();
     }
 
@@ -71,13 +76,15 @@ public class MainActivity extends AppCompatActivity {
         TMDBApi api = new TMDBApi();
         URL urlList;
 
-        if (sortmovies == 0)
-        {
-            urlList = api.getPopularMoviesUrl();
-        }
-        else
-        {
-            urlList = api.getTopRatedMoviesUrl();
+        switch (sortmovies){
+            case SHOW_POPULAR_MOVIES:
+                urlList = api.getPopularMoviesUrl();
+                break;
+            case SHOW_TOPRATED_MOVIES:
+                urlList = api.getTopRatedMoviesUrl();
+                break;
+            default:
+                urlList = null;
         }
 
         new MoviesFetcher(this, new FetchMoviesTaskCompleteLister()).execute(urlList);
@@ -102,13 +109,19 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.menuSortMostPopular:
-                sortmovies = 0;
+                sortmovies = SHOW_POPULAR_MOVIES;
+                showFavs = false;
                 reloadList();
                 return true;
             case R.id.menuSortTopRated:
-                sortmovies = 1;
+                sortmovies = SHOW_TOPRATED_MOVIES;
+                showFavs = false;
                 reloadList();
                 return true;
+            case R.id.menuShowFavs:
+                sortmovies = SHOW_FAVORITE_MOVIES;
+                showFavs = true;
+                reloadList();
             default:
                 return super.onOptionsItemSelected(item);
         }

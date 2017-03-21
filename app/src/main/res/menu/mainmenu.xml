@@ -10,4 +10,9 @@
         android:id="@+id/menuSortTopRated"
         android:title="@string/menuoption_top_rated_option"
         android:actionLayout="@layout/action_sort"  />
+
+    <item
+        android:id="@+id/menuShowFavs"
+        android:title="@string/menuoption_favorites"
+        android:actionLayout="@layout/action_sort"  />
 </menu>

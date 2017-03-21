@@ -16,7 +16,7 @@
  * http://www.econceptes.com
  */
 
-package com.example.android.popularmovies.dataclasses;
+package com.example.android.popularmovies.pojos;
 
 import android.net.Uri;
 

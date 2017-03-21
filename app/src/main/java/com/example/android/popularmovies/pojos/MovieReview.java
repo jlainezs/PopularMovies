@@ -25,15 +25,10 @@
  * http://www.econceptes.com
  */
 
-package com.example.android.popularmovies.dataclasses;
+package com.example.android.popularmovies.pojos;
 
-import android.net.Uri;
-
-import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
