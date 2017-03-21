@@ -9,6 +9,8 @@
     <string name="trailers">Trailers</string>
     <string name="movie_reviews_title">Reviews</string>
     <string name="menuoption_favorites">Favorites</string>
+    <string name="saved_to_favorites">Saved to favorites</string>
+    <string name="cannot_save_to_favorites">Can\'t save the favorite</string>
     <string-array name="movies_sort">
         <item>Most popular</item>
         <item>Most rated</item>
