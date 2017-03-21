@@ -174,17 +174,13 @@ public class MovieDetailsActivity extends AppCompatActivity {
                     cv.put(FavoriteMovieContract.FavoriteMovieEntry.COLUMN_NAME_RATING, movie.getVote_average());
                     cv.put(FavoriteMovieContract.FavoriteMovieEntry.COLUMN_NAME_RELEASED, movie.getRelease_date());
                     mDb.insert(FavoriteMovieContract.FavoriteMovieEntry.TABLE_NAME, null, cv);
+                    Toast.makeText(v.getContext(), "Saved to favorites", Toast.LENGTH_SHORT).show();
                 } catch (Exception e) {
                     Toast.makeText(v.getContext(), "Can't save the favorite", Toast.LENGTH_SHORT).show();
                     Log.e(TAG, e.getMessage());
                 }
             }
         });
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
     }
 
     private void populateMovieReviewsList(){
