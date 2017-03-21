@@ -22,11 +22,12 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private ArrayList<Movie> movies = new ArrayList<>();
-    private int sortmovies = 0;
-    private boolean showFavs = false;
+    private int showMovies = 0;
     private final int SHOW_POPULAR_MOVIES = 0;
     private final int SHOW_TOPRATED_MOVIES = 1;
     private final int SHOW_FAVORITE_MOVIES = 2;
+    private static final String TAG = MainActivity.class.getSimpleName();
+    private static final String LIFECYCLE_SHOW_MOVIES = "showmovies";
 
     public class FetchMoviesTaskCompleteLister  implements AsyncTaskCompleteListener<ArrayList<Movie>> {
         @Override
@@ -53,7 +54,19 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(LIFECYCLE_SHOW_MOVIES)) {
+                showMovies = savedInstanceState.getInt(LIFECYCLE_SHOW_MOVIES);
+            }
+        }
+
         initializeGrid();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt(LIFECYCLE_SHOW_MOVIES, showMovies);
     }
 
     private void initializeGrid() {
@@ -76,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
         TMDBApi api = new TMDBApi();
         URL urlList;
 
-        switch (sortmovies){
+        switch (showMovies){
             case SHOW_POPULAR_MOVIES:
                 urlList = api.getPopularMoviesUrl();
                 break;
@@ -109,18 +122,15 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
             case R.id.menuSortMostPopular:
-                sortmovies = SHOW_POPULAR_MOVIES;
-                showFavs = false;
+                showMovies = SHOW_POPULAR_MOVIES;
                 reloadList();
                 return true;
             case R.id.menuSortTopRated:
-                sortmovies = SHOW_TOPRATED_MOVIES;
-                showFavs = false;
+                showMovies = SHOW_TOPRATED_MOVIES;
                 reloadList();
                 return true;
             case R.id.menuShowFavs:
-                sortmovies = SHOW_FAVORITE_MOVIES;
-                showFavs = true;
+                showMovies = SHOW_FAVORITE_MOVIES;
                 reloadList();
             default:
                 return super.onOptionsItemSelected(item);
