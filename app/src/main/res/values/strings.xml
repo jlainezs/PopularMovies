@@ -12,6 +12,8 @@
     <string name="saved_to_favorites">Saved to favorites</string>
     <string name="cannot_save_to_favorites">Can\'t save the favorite</string>
     <string name="unsupported_uri">Unkonw uri:</string>
+    <string name="favorite_removed">Favorite removed</string>
+    <string name="cannot_remove_favorite">Can\'t remove favorite</string>
     <string-array name="movies_sort">
         <item>Most popular</item>
         <item>Most rated</item>

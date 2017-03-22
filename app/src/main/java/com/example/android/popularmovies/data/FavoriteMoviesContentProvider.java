@@ -60,6 +60,15 @@ public class FavoriteMoviesContentProvider extends ContentProvider {
                     projection, selection, selectionArgs, null, null, sortOrder
                     );
                 break;
+            case FAVORITEMOVIES_WITH_ID:
+                String id = uri.getPathSegments().get(1);
+                String mSelection = "_id=?";
+                String[] mSelectionArgs = new String[]{id};
+                retCursor = db.query(FavoriteMovieContract.FavoriteMovieEntry.TABLE_NAME,
+                        projection, mSelection, mSelectionArgs, null, null, sortOrder
+                );
+
+                break;
             default:
                 throw new UnsupportedOperationException(getContext().getString(R.string.unsupported_uri) + uri);
         }
@@ -99,7 +108,27 @@ public class FavoriteMoviesContentProvider extends ContentProvider {
 
     @Override
     public int delete(@NonNull Uri uri, @Nullable String selection, @Nullable String[] selectionArgs) {
-        return 0;
+        final SQLiteDatabase db = moviesDBHelper.getWritableDatabase();
+        int match = sUriMatcher.match(uri);
+        int result = 0;
+
+        switch (match)
+        {
+            case FAVORITEMOVIES:
+                // Remove all
+                result = db.delete(FavoriteMovieContract.FavoriteMovieEntry.TABLE_NAME,null, null);
+                break;
+            case FAVORITEMOVIES_WITH_ID:
+                String id = uri.getPathSegments().get(1);
+                String mSelection = FavoriteMovieContract.FavoriteMovieEntry.COLUMN_NAME_MOVIEID + "=?";
+                String[] mSelectionArgs = new String[]{id};
+                result = db.delete(FavoriteMovieContract.FavoriteMovieEntry.TABLE_NAME, mSelection, mSelectionArgs);
+                break;
+            default:
+                throw new UnsupportedOperationException(getContext().getString(R.string.unsupported_uri) + uri);
+        }
+
+        return result;
     }
 
     @Override

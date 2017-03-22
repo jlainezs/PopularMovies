@@ -1,6 +1,7 @@
 package com.example.android.popularmovies;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -13,6 +14,7 @@ import android.widget.Toast;
 import com.example.android.popularmovies.adapters.MoviesAdapter;
 import com.example.android.popularmovies.async.AsyncTaskCompleteListener;
 import com.example.android.popularmovies.async.MoviesFetcher;
+import com.example.android.popularmovies.data.FavoriteMovieContract;
 import com.example.android.popularmovies.pojos.Movie;
 import com.example.android.popularmovies.utilities.TMDBApi;
 
@@ -81,6 +83,26 @@ public class MainActivity extends AppCompatActivity {
                 Movie m = movies.get(position);
                 intent.putExtra("movie", m);
                 startActivity(intent);
+            }
+        });
+
+        gridView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                if (showMovies == SHOW_FAVORITE_MOVIES) {
+                    Movie m = movies.get(position);
+                    Uri uri = FavoriteMovieContract.FavoriteMovieEntry.CONTENT_URI
+                            .buildUpon().appendPath(m.getId().toString()).build();
+                    int deleted = getContentResolver().delete(uri, null, null);
+                    if (deleted > 0) {
+                        Toast.makeText(getApplicationContext(), R.string.favorite_removed, Toast.LENGTH_SHORT).show();
+                        reloadList();
+                    } else {
+                        Toast.makeText(getApplicationContext(), R.string.cannot_remove_favorite, Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+                return true;
             }
         });
     }
