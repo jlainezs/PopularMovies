@@ -48,6 +48,14 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this, R.string.error_message_cant_load_movies, Toast.LENGTH_LONG).show();
                 }
             }
+
+            if (movies.size() > 0){
+                gridView.setVisibility(View.VISIBLE);
+                findViewById(R.id.no_content_to_show).setVisibility(View.GONE);
+            } else {
+                gridView.setVisibility(View.GONE);
+                findViewById(R.id.no_content_to_show).setVisibility(View.VISIBLE);
+            }
         }
     }
 

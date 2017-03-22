@@ -26,4 +26,14 @@
         android:listSelector="@null"
         android:verticalSpacing="@dimen/grid_spacing" />
 
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/no_content_to_show"
+        android:visibility="invisible"
+        android:text="@string/there_s_no_content_to_be_shown"
+        />
+
+
 </LinearLayout>

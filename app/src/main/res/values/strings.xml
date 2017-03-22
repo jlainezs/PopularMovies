@@ -14,6 +14,7 @@
     <string name="unsupported_uri">Unkonw uri:</string>
     <string name="favorite_removed">Favorite removed</string>
     <string name="cannot_remove_favorite">Can\'t remove favorite</string>
+    <string name="there_s_no_content_to_be_shown">There\'s no content to be shown</string>
     <string-array name="movies_sort">
         <item>Most popular</item>
         <item>Most rated</item>
