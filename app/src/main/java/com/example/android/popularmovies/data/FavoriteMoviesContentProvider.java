@@ -82,6 +82,17 @@ public class FavoriteMoviesContentProvider extends ContentProvider {
         return null;
     }
 
+    private boolean movieExists(SQLiteDatabase dbm, ContentValues values)
+    {
+        String selection = FavoriteMovieContract.FavoriteMovieEntry.COLUMN_NAME_MOVIEID + "=?";
+        String[] selectionArgs = new String[]{values.getAsString(FavoriteMovieContract.FavoriteMovieEntry.COLUMN_NAME_MOVIEID)};
+        Cursor cursor = dbm.query(FavoriteMovieContract.FavoriteMovieEntry.TABLE_NAME, null, selection, selectionArgs, null, null, null);
+        boolean result = cursor.moveToFirst();
+        cursor.close();
+
+        return result;
+    }
+
     @Nullable
     @Override
     public Uri insert(@NonNull Uri uri, @Nullable ContentValues values) {
@@ -91,11 +102,15 @@ public class FavoriteMoviesContentProvider extends ContentProvider {
 
         switch (match){
             case FAVORITEMOVIES:
-                long id = db.insert(FavoriteMovieContract.FavoriteMovieEntry.TABLE_NAME, null, values);
-                if (id > 0) {
-                    returnUri = ContentUris.withAppendedId(FavoriteMovieContract.FavoriteMovieEntry.CONTENT_URI, id);
+                if (!movieExists(db, values)) {
+                    long id = db.insert(FavoriteMovieContract.FavoriteMovieEntry.TABLE_NAME, null, values);
+                    if (id > 0) {
+                        returnUri = ContentUris.withAppendedId(FavoriteMovieContract.FavoriteMovieEntry.CONTENT_URI, id);
+                    } else {
+                        throw new SQLException(getContext().getString(R.string.cannot_save_to_favorites));
+                    }
                 } else {
-                    throw new SQLException(getContext().getString(R.string.cannot_save_to_favorites));
+                    throw new RuntimeException("Movie is already faved!");
                 }
                 break;
             default:

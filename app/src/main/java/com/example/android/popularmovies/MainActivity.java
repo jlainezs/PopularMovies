@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private final int SHOW_FAVORITE_MOVIES = 2;
     private static final String TAG = MainActivity.class.getSimpleName();
     private static final String LIFECYCLE_SHOW_MOVIES = "showmovies";
+    private static final String LIFECYCLE_GRID_POSITION = "gridposition";
+    private static int gridPosition = -1;
 
     public class FetchMoviesTaskCompleteLister  implements AsyncTaskCompleteListener<ArrayList<Movie>> {
         @Override
@@ -56,6 +58,11 @@ public class MainActivity extends AppCompatActivity {
                 gridView.setVisibility(View.GONE);
                 findViewById(R.id.no_content_to_show).setVisibility(View.VISIBLE);
             }
+
+            if (gridPosition > -1){
+                gridView.smoothScrollToPosition(gridPosition);
+                gridPosition = -1;
+            }
         }
     }
 
@@ -68,6 +75,9 @@ public class MainActivity extends AppCompatActivity {
             if (savedInstanceState.containsKey(LIFECYCLE_SHOW_MOVIES)) {
                 showMovies = savedInstanceState.getInt(LIFECYCLE_SHOW_MOVIES);
             }
+            if (savedInstanceState.containsKey(LIFECYCLE_GRID_POSITION)){
+                gridPosition = savedInstanceState.getInt(LIFECYCLE_GRID_POSITION);
+            }
         }
 
         initializeGrid();
@@ -77,6 +87,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putInt(LIFECYCLE_SHOW_MOVIES, showMovies);
+        GridView gridView = (GridView) findViewById(R.id.gridview);
+        int position = gridView.getFirstVisiblePosition();
+        outState.putInt(LIFECYCLE_GRID_POSITION, position);
     }
 
     private void initializeGrid() {
