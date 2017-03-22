@@ -15,6 +15,9 @@
     <string name="favorite_removed">Favorite removed</string>
     <string name="cannot_remove_favorite">Can\'t remove favorite</string>
     <string name="there_s_no_content_to_be_shown">There\'s no content to be shown</string>
+    <string name="no_video_app_found">Can\'t find a valid app to show the video</string>
+    <string name="unsupported_video_platform">Can\'t show video: unsupported platform</string>
+    <string name="cannot_show_video_now">Can\'t show this video now!</string>
     <string-array name="movies_sort">
         <item>Most popular</item>
         <item>Most rated</item>
