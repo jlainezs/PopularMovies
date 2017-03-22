@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/small_margin"
         android:background="@color/colorAccent"
-        android:textColor="#ffffff"
+        android:textColor="@color/titleColor"
         android:gravity="start"
         android:paddingBottom="@dimen/large_padding"
         android:paddingEnd="@dimen/default_padding"
@@ -111,7 +111,7 @@
                             android:layout_marginBottom="@dimen/large_margin"
                             android:layout_marginTop="@dimen/large_margin"
                             android:text="@string/trailers"
-                            android:textColor="#000000"
+                            android:textColor="@color/textColor"
                             android:textSize="@dimen/subtitle_font_size" />
 
                         <com.example.android.popularmovies.views.ExpandableHeightListView
@@ -131,7 +131,7 @@
                     android:layout_marginBottom="@dimen/large_margin"
                     android:layout_marginTop="@dimen/large_margin"
                     android:text="@string/movie_reviews_title"
-                    android:textColor="#000000"
+                    android:textColor="@color/textColor"
                     android:textSize="@dimen/subtitle_font_size" />
 
                 <com.example.android.popularmovies.views.ExpandableHeightListView
