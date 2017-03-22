@@ -173,10 +173,15 @@ public class MovieDetailsActivity extends AppCompatActivity {
                     cv.put(FavoriteMovieContract.FavoriteMovieEntry.COLUMN_NAME_POSTER, movie.getPoster_path());
                     cv.put(FavoriteMovieContract.FavoriteMovieEntry.COLUMN_NAME_RATING, movie.getVote_average());
                     cv.put(FavoriteMovieContract.FavoriteMovieEntry.COLUMN_NAME_RELEASED, movie.getRelease_date());
-                    mDb.insert(FavoriteMovieContract.FavoriteMovieEntry.TABLE_NAME, null, cv);
-                    Toast.makeText(v.getContext(), R.string.saved_to_favorites, Toast.LENGTH_SHORT).show();
+                    // mDb.insert(FavoriteMovieContract.FavoriteMovieEntry.TABLE_NAME, null, cv);
+                    Uri uri = getContentResolver().insert(FavoriteMovieContract.FavoriteMovieEntry.CONTENT_URI, cv);
+                    if (uri != null) {
+                        Toast.makeText(v.getContext(), R.string.saved_to_favorites, Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(v.getContext(), R.string.cannot_save_to_favorites, Toast.LENGTH_SHORT).show();
+                    }
                 } catch (Exception e) {
-                    Toast.makeText(v.getContext(), R.string.cannot_save_to_favorites, Toast.LENGTH_SHORT).show();
+                    Toast.makeText(v.getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
                     Log.e(TAG, e.getMessage());
                 }
             }

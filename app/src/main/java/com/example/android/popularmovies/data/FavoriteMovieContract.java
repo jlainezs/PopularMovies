@@ -9,6 +9,7 @@
 
 package com.example.android.popularmovies.data;
 
+import android.net.Uri;
 import android.provider.BaseColumns;
 
 /**
@@ -16,9 +17,18 @@ import android.provider.BaseColumns;
  */
 
 public class FavoriteMovieContract {
+
+    public static final String AUTHORITY = "com.example.android.popularmovies";
+    public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + AUTHORITY);
+    public static final String PATH_FAVORITEMOVIES = "favoritemovies";
+
     private FavoriteMovieContract() {}
 
     public static class FavoriteMovieEntry implements BaseColumns{
+
+        public static final Uri CONTENT_URI =
+                BASE_CONTENT_URI.buildUpon().appendPath(PATH_FAVORITEMOVIES).build();
+
         public static final String TABLE_NAME = "favmovies";
         public static final String COLUMN_NAME_TITLE = "title";
         public static final String COLUMN_NAME_MOVIEID = "movieid";

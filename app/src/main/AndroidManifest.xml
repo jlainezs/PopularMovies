@@ -20,6 +20,14 @@
             </intent-filter>
         </activity>
         <activity android:name=".MovieDetailsActivity"/>
+        <provider
+            android:authorities="com.example.android.popularmovies"
+            android:name=".data.FavoriteMoviesContentProvider"
+            android:exported="true"
+            android:grantUriPermissions="true"
+            android:label="FavoriteMoviesContentProvider"
+            android:readPermission="com.example.android.popularmovies.READ"
+            android:writePermission="com.example.android.popularmovies.WRITE" />
     </application>
 
 </manifest>
