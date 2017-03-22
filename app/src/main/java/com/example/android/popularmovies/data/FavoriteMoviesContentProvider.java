@@ -50,7 +50,21 @@ public class FavoriteMoviesContentProvider extends ContentProvider {
     @Nullable
     @Override
     public Cursor query(@NonNull Uri uri, @Nullable String[] projection, @Nullable String selection, @Nullable String[] selectionArgs, @Nullable String sortOrder) {
-        return null;
+        final SQLiteDatabase db = moviesDBHelper.getReadableDatabase();
+        int match =     sUriMatcher.match(uri);
+        Cursor retCursor;
+
+        switch (match){
+            case FAVORITEMOVIES:
+                retCursor = db.query(FavoriteMovieContract.FavoriteMovieEntry.TABLE_NAME,
+                    projection, selection, selectionArgs, null, null, sortOrder
+                    );
+                break;
+            default:
+                throw new UnsupportedOperationException(getContext().getString(R.string.unsupported_uri) + uri);
+        }
+
+        return retCursor;
     }
 
     @Nullable
@@ -76,7 +90,7 @@ public class FavoriteMoviesContentProvider extends ContentProvider {
                 }
                 break;
             default:
-                throw new UnsupportedOperationException("Unkonw uri:" + uri);
+                throw new UnsupportedOperationException(getContext().getString(R.string.unsupported_uri) + uri);
         }
 
         getContext().getContentResolver().notifyChange(uri, null);

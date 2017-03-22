@@ -49,7 +49,7 @@ public class MoviesFetcher extends AsyncTask<URL, Void, ArrayList<Movie>> {
         if (urls[0] != null) {
             movies = getMoviesFromURL(urls[0]);
         } else {
-            movies = getMoviesFromDatabase();
+            movies = getMoviesFromContentProvider(); //getMoviesFromDatabase();
         }
 
         return movies;
@@ -99,6 +99,33 @@ public class MoviesFetcher extends AsyncTask<URL, Void, ArrayList<Movie>> {
         }
 
         return movies;
+    }
+
+    public ArrayList<Movie> getMoviesFromContentProvider() {
+        try {
+            ArrayList<Movie> movies = new ArrayList<>();
+            Cursor csr = context.getContentResolver().query(FavoriteMovieContract.FavoriteMovieEntry.CONTENT_URI,
+                    null, null, null, FavoriteMovieContract.FavoriteMovieEntry.COLUMN_NAME_TITLE
+            );
+
+            if (csr.moveToFirst()) {
+                do {
+                    Movie movie = new Movie();
+                    movie.setId(csr.getLong(csr.getColumnIndex(FavoriteMovieContract.FavoriteMovieEntry.COLUMN_NAME_MOVIEID)));
+                    movie.setTitle(csr.getString(csr.getColumnIndex(FavoriteMovieContract.FavoriteMovieEntry.COLUMN_NAME_TITLE)));
+                    movie.setRelease_date(csr.getString(csr.getColumnIndex(FavoriteMovieContract.FavoriteMovieEntry.COLUMN_NAME_RELEASED)));
+                    movie.setPoster_path(csr.getString(csr.getColumnIndex(FavoriteMovieContract.FavoriteMovieEntry.COLUMN_NAME_POSTER)));
+                    movie.setVote_average(csr.getDouble(csr.getColumnIndex(FavoriteMovieContract.FavoriteMovieEntry.COLUMN_NAME_RATING)));
+                    movie.setOverview(csr.getString(csr.getColumnIndex(FavoriteMovieContract.FavoriteMovieEntry.COLUMN_NAME_OVERVIEW)));
+                    movies.add(movie);
+                }
+                while (csr.moveToNext());
+            }
+
+            return movies;
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
 
