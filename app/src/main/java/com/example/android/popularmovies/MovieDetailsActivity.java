@@ -146,12 +146,16 @@ public class MovieDetailsActivity extends AppCompatActivity {
                     String newVideoPath = video.getVideoPath().toString();
                     if (newVideoPath != null) {
                         Intent intent = new Intent(Intent.ACTION_VIEW, Uri.parse(newVideoPath));
-                        startActivity(intent);
+                        if (intent.resolveActivity(getPackageManager()) != null) {
+                            startActivity(intent);
+                        } else {
+                            Toast.makeText(MovieDetailsActivity.this, R.string.no_video_app_found, Toast.LENGTH_SHORT).show();
+                        }
                     } else {
-                        Toast.makeText(MovieDetailsActivity.this, "Can't show video: unsupported platform", Toast.LENGTH_LONG).show();
+                        Toast.makeText(MovieDetailsActivity.this, R.string.unsupported_video_platform, Toast.LENGTH_LONG).show();
                     }
                 } catch (Exception e) {
-                    Toast.makeText(MovieDetailsActivity.this, "Can't show this video now!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(MovieDetailsActivity.this, R.string.cannot_show_video_now, Toast.LENGTH_LONG).show();
                 }
             }
         });
